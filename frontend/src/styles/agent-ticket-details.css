@@ -1,0 +1,902 @@
+.agent-ticket-details-page {
+    padding: 30px;
+}
+
+.agent-detail-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 25px;
+}
+
+.agent-detail-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: #198754;
+}
+
+.agent-detail-header h1 {
+    margin: 5px 0;
+    font-size: 30px;
+    color: #1f2937;
+}
+
+.agent-detail-header p {
+    margin: 0;
+    font-size: 13px;
+    color: #6b7280;
+}
+
+.agent-detail-back {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    border: 1px solid #198754;
+    border-radius: 8px;
+    color: #198754;
+    background: white;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.agent-detail-back:hover {
+    background: #198754;
+    color: white;
+}
+
+.agent-detail-message {
+    padding: 13px 16px;
+    margin-bottom: 18px;
+    border-radius: 8px;
+    font-size: 13px;
+}
+
+.agent-detail-message.error {
+    background: #fff5f5;
+    color: #dc3545;
+}
+
+.agent-detail-message.success {
+    background: #e8f7ee;
+    color: #198754;
+}
+
+.agent-detail-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 20px;
+}
+
+.agent-ticket-main-card,
+.agent-assignment-card {
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+}
+
+.agent-ticket-main-card {
+    padding: 25px;
+}
+
+.agent-ticket-main-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.agent-ticket-id {
+    font-size: 12px;
+    color: #198754;
+    font-weight: 700;
+}
+
+.agent-ticket-main-header h2 {
+    margin: 7px 0 0;
+    font-size: 22px;
+    color: #1f2937;
+}
+
+.agent-detail-badge {
+    display: inline-block;
+    padding: 6px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.agent-detail-open {
+    background: #e8f1ff;
+    color: #2563eb;
+}
+
+.agent-detail-assigned {
+    background: #f0eaff;
+    color: #7c3aed;
+}
+
+.agent-detail-progress {
+    background: #fff4df;
+    color: #b7791f;
+}
+
+.agent-detail-waiting {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.agent-detail-resolved {
+    background: #e8f7ee;
+    color: #198754;
+}
+
+.agent-detail-closed {
+    background: #eeeeee;
+    color: #555;
+}
+
+.agent-detail-critical {
+    background: #fde8e8;
+    color: #dc2626;
+}
+
+.agent-detail-high {
+    background: #fff0e6;
+    color: #ea580c;
+}
+
+.agent-detail-medium {
+    background: #fff8df;
+    color: #a16207;
+}
+
+.agent-detail-low {
+    background: #e8f7ee;
+    color: #198754;
+}
+
+.agent-ticket-info-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    padding: 22px 0;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.agent-ticket-info-row span {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 11px;
+    color: #6b7280;
+}
+
+.agent-ticket-info-row strong {
+    font-size: 13px;
+    color: #1f2937;
+}
+
+.agent-description-section {
+    padding: 22px 0;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.agent-description-section h3,
+.agent-employee-section h3,
+.agent-attachment-section h3 {
+    margin: 0 0 10px;
+    font-size: 16px;
+    color: #1f2937;
+}
+
+.agent-description-section p {
+    margin: 0;
+    line-height: 1.7;
+    font-size: 13px;
+    color: #4b5563;
+}
+
+.agent-employee-section {
+    padding: 22px 0;
+}
+
+.agent-employee-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.agent-employee-avatar {
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #e8f7ee;
+    color: #198754;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.agent-employee-info strong,
+.agent-employee-info span,
+.agent-employee-info small {
+    display: block;
+}
+
+.agent-employee-info strong {
+    font-size: 13px;
+    color: #1f2937;
+}
+
+.agent-employee-info span {
+    margin-top: 3px;
+    font-size: 12px;
+    color: #6b7280;
+}
+
+.agent-employee-info small {
+    margin-top: 3px;
+    font-size: 11px;
+    color: #9ca3af;
+}
+
+.agent-attachment-section {
+    padding-top: 20px;
+    border-top: 1px solid #e5e7eb;
+}
+
+.agent-attachment-section a {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    color: #198754;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.agent-assignment-card {
+    padding: 22px;
+    height: fit-content;
+}
+
+.agent-assignment-card h3 {
+    margin: 0;
+    font-size: 18px;
+    color: #1f2937;
+}
+
+.agent-assignment-card p {
+    margin: 7px 0 20px;
+    font-size: 12px;
+    line-height: 1.5;
+    color: #6b7280;
+}
+
+.agent-assignment-card label {
+    display: block;
+    margin-bottom: 7px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #374151;
+}
+
+.agent-assignment-card select {
+    width: 100%;
+    height: 44px;
+    padding: 0 12px;
+    border: 1px solid #dfe5e2;
+    border-radius: 8px;
+    background: white;
+    color: #374151;
+    font-size: 13px;
+    outline: none;
+}
+
+.agent-assignment-card select:focus {
+    border-color: #198754;
+}
+
+.agent-assignment-card button {
+    width: 100%;
+    height: 44px;
+    margin-top: 14px;
+    border: none;
+    border-radius: 8px;
+    background: #198754;
+    color: white;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.agent-assignment-card button:hover {
+    background: #157347;
+}
+
+.agent-assignment-card button:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.currently-assigned {
+    margin-top: 20px;
+    padding: 14px;
+    border-radius: 8px;
+    background: #f4faf7;
+}
+
+.currently-assigned span,
+.currently-assigned strong,
+.currently-assigned small {
+    display: block;
+}
+
+.currently-assigned span {
+    margin-bottom: 5px;
+    font-size: 10px;
+    color: #6b7280;
+}
+
+.currently-assigned strong {
+    font-size: 13px;
+    color: #1f2937;
+}
+
+.currently-assigned small {
+    margin-top: 3px;
+    font-size: 11px;
+    color: #6b7280;
+}
+
+.agent-detail-loading,
+.agent-detail-error {
+    padding: 50px;
+    text-align: center;
+    font-size: 14px;
+}
+
+@media (max-width: 900px) {
+    .agent-detail-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .agent-ticket-info-row {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .agent-ticket-details-page {
+        padding: 20px;
+    }
+
+    .agent-detail-header {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .agent-ticket-info-row {
+        grid-template-columns: 1fr;
+    }
+
+    .agent-ticket-main-header {
+        flex-direction: column;
+    }
+}
+
+/* =========================================
+   COMMENTS & REPLIES
+========================================= */
+
+.agent-comments-section {
+    margin-top: 30px;
+    padding-top: 25px;
+    border-top: 1px solid #e5e7eb;
+}
+
+.agent-comments-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 22px;
+}
+
+.agent-comments-header h3 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.agent-comments-header h3 i {
+    margin-right: 9px;
+}
+
+.agent-comments-header p {
+    margin: 6px 0 0;
+    color: #7b8794;
+    font-size: 14px;
+}
+
+.agent-comments-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.agent-comment {
+    display: flex;
+    gap: 12px;
+    padding: 16px;
+    background: #f8faf9;
+    border-radius: 12px;
+}
+
+.agent-comment-avatar {
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    background: #dff4e9;
+    color: #138a57;
+}
+
+.agent-comment-content {
+    flex: 1;
+}
+
+.agent-comment-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 5px;
+}
+
+.agent-comment-top strong {
+    font-size: 14px;
+    color: #1f2937;
+}
+
+.agent-comment-top small {
+    color: #8a96a3;
+    font-size: 12px;
+}
+
+.agent-comment-content p {
+    margin: 0;
+    color: #4b5563;
+    font-size: 14px;
+    line-height: 1.6;
+    white-space: pre-wrap;
+}
+
+.agent-no-comments {
+    text-align: center;
+    padding: 30px 20px;
+    border: 1px dashed #d5ddd8;
+    border-radius: 12px;
+    color: #89958f;
+}
+
+.agent-no-comments i {
+    font-size: 30px;
+}
+
+.agent-no-comments p {
+    margin: 8px 0 0;
+}
+
+/* =========================================
+   ADD COMMENT
+========================================= */
+
+.agent-add-comment {
+    margin-top: 22px;
+    padding: 20px;
+    background: #f8faf9;
+    border-radius: 12px;
+}
+
+.agent-add-comment label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.agent-add-comment textarea {
+    width: 100%;
+    resize: vertical;
+    min-height: 100px;
+    padding: 12px 14px;
+    border: 1px solid #d9e1dd;
+    border-radius: 10px;
+    outline: none;
+    font-family: inherit;
+    font-size: 14px;
+    background: #ffffff;
+}
+
+.agent-add-comment textarea:focus {
+    border-color: #168957;
+}
+
+.agent-add-comment button {
+    margin-top: 12px;
+    padding: 11px 18px;
+    border: none;
+    border-radius: 8px;
+    background: #168957;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.agent-add-comment button:hover {
+    opacity: 0.92;
+}
+
+.agent-add-comment button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.agent-add-comment button i {
+    margin-right: 7px;
+}
+
+/* =========================================
+   RESOLUTION
+========================================= */
+
+.agent-resolution-section {
+    margin-top: 30px;
+    padding-top: 25px;
+    border-top: 1px solid #e5e7eb;
+}
+
+.agent-resolution-header {
+    margin-bottom: 20px;
+}
+
+.agent-resolution-header h3 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.agent-resolution-header h3 i {
+    margin-right: 9px;
+}
+
+.agent-resolution-header p {
+    margin: 6px 0 0;
+    color: #7b8794;
+    font-size: 14px;
+}
+
+.agent-resolution-form {
+    padding: 20px;
+    background: #f8faf9;
+    border-radius: 12px;
+}
+
+.agent-resolution-form label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.agent-resolution-form textarea {
+    width: 100%;
+    min-height: 120px;
+    resize: vertical;
+    padding: 13px 14px;
+    border: 1px solid #d9e1dd;
+    border-radius: 10px;
+    outline: none;
+    font-family: inherit;
+    font-size: 14px;
+    background: #ffffff;
+}
+
+.agent-resolution-form textarea:focus {
+    border-color: #168957;
+}
+
+.agent-resolution-form button {
+    margin-top: 12px;
+    padding: 11px 20px;
+    border: none;
+    border-radius: 8px;
+    background: #168957;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.agent-resolution-form button:hover {
+    opacity: 0.92;
+}
+
+.agent-resolution-form button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.agent-resolution-form button i {
+    margin-right: 7px;
+}
+
+.resolution-completed {
+    margin-top: 14px;
+    padding: 12px 15px;
+    border-radius: 8px;
+    background: #e8f7ef;
+    color: #168957;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.resolution-completed i {
+    margin-right: 7px;
+}
+
+/* =========================================================
+   AGENT TICKET DETAILS - CONTROL FIX
+   ========================================================= */
+
+.agent-ticket-details-page {
+    width: 100%;
+    box-sizing: border-box;
+    background: #f8fafc;
+    min-height: 100vh;
+}
+
+/* Fix all labels inside ticket details */
+.agent-ticket-details-page label {
+    display: block;
+    margin-bottom: 8px;
+    color: #374151;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+/* Fix all select boxes */
+.agent-ticket-details-page select {
+    width: 100%;
+    min-height: 44px;
+    box-sizing: border-box;
+
+    padding: 10px 40px 10px 13px;
+
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+
+    background-color: #ffffff;
+    color: #1f2937;
+
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 500;
+
+    outline: none;
+    cursor: pointer;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.agent-ticket-details-page select:hover {
+    border-color: #198754;
+}
+
+.agent-ticket-details-page select:focus {
+    border-color: #198754;
+    box-shadow: 0 0 0 3px rgba(25, 135, 84, 0.10);
+}
+
+/* =========================================================
+   STATUS / PRIORITY CONTROL CARDS
+   ========================================================= */
+
+.agent-ticket-details-page .ticket-status-control,
+.agent-ticket-details-page .ticket-priority-control,
+.agent-ticket-details-page .transfer-ticket-section {
+    width: 100%;
+    box-sizing: border-box;
+
+    margin-top: 16px;
+    padding: 20px;
+
+    background: #ffffff;
+
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+}
+
+/* Control headings */
+.agent-ticket-details-page .ticket-status-control h3,
+.agent-ticket-details-page .ticket-priority-control h3,
+.agent-ticket-details-page .transfer-ticket-section h3 {
+    margin: 0 0 14px;
+
+    color: #1f2937;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+/* Small help text */
+.agent-ticket-details-page .ticket-status-control small,
+.agent-ticket-details-page .ticket-priority-control small {
+    display: block;
+
+    margin-top: 7px;
+
+    color: #9ca3af;
+    font-size: 11px;
+}
+
+/* =========================================================
+   TRANSFER TICKET
+   ========================================================= */
+
+.agent-ticket-details-page .transfer-ticket-section {
+    margin-top: 16px;
+}
+
+.agent-ticket-details-page .transfer-ticket-section h3 {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    margin-bottom: 7px;
+
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.agent-ticket-details-page .transfer-ticket-section h3 i {
+    color: #198754;
+    font-size: 20px;
+}
+
+.agent-ticket-details-page .transfer-ticket-section p {
+    margin: 0 0 16px;
+
+    color: #6b7280;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+/* Transfer select */
+.agent-ticket-details-page .transfer-ticket-section select {
+    margin-top: 4px;
+}
+
+/* Transfer button */
+.agent-ticket-details-page .transfer-ticket-section button {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    min-height: 44px;
+
+    margin-top: 12px;
+    padding: 10px 16px;
+
+    border: none;
+    border-radius: 8px;
+
+    background: #198754;
+    color: #ffffff;
+
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+.agent-ticket-details-page .transfer-ticket-section button:hover {
+    background: #157347;
+    transform: translateY(-1px);
+}
+
+.agent-ticket-details-page .transfer-ticket-section button:disabled {
+    background: #d1d5db;
+    color: #9ca3af;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* =========================================================
+   ASSIGNMENT CARD IMPROVEMENT
+   ========================================================= */
+
+.agent-ticket-details-page .agent-assignment-card {
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+}
+
+.agent-ticket-details-page .agent-assignment-card select {
+    margin-bottom: 2px;
+}
+
+/* Currently assigned */
+.agent-ticket-details-page .currently-assigned {
+    background: #f4faf7;
+    border: 1px solid #dcefe5;
+}
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+    .agent-ticket-details-page {
+        padding: 16px;
+    }
+
+    .agent-ticket-details-page .ticket-status-control,
+    .agent-ticket-details-page .ticket-priority-control,
+    .agent-ticket-details-page .transfer-ticket-section,
+    .agent-ticket-details-page .agent-assignment-card {
+        padding: 16px;
+    }
+
+    .agent-ticket-details-page select {
+        min-height: 42px;
+        font-size: 13px;
+    }
+
+    .agent-ticket-details-page .transfer-ticket-section h3 {
+        font-size: 18px;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .agent-ticket-details-page {
+        padding: 12px;
+    }
+
+    .agent-ticket-details-page .ticket-status-control,
+    .agent-ticket-details-page .ticket-priority-control,
+    .agent-ticket-details-page .transfer-ticket-section,
+    .agent-ticket-details-page .agent-assignment-card {
+        padding: 14px;
+    }
+
+    .agent-ticket-details-page label {
+        font-size: 12px;
+    }
+
+    .agent-ticket-details-page select {
+        min-height: 40px;
+        font-size: 12px;
+    }
+}
