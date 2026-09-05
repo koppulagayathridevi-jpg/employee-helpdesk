@@ -1,54 +1,93 @@
+
+
 const Ticket = require("../models/Ticket");
 const User = require("../models/User");
+
+// =====================================
+// SLA HOURS
+// =====================================
+const getSlaHours = (priority) => {
+    switch (priority) {
+        case "Critical":
+            return 4;
+
+        case "High":
+            return 8;
+
+        case "Medium":
+            return 24;
+
+        case "Low":
+            return 48;
+
+        default:
+            return 24;
+    }
+};
+
 
 // =====================================
 // CREATE TICKET
 // =====================================
 const createTicket = async (req, res) => {
-  try {
-    const {
-      title,
-      department,
-      category,
-      priority,
-      description
-    } = req.body;
+    try {
+        const {
+            title,
+            department,
+            category,
+            priority,
+            description
+        } = req.body;
 
-    if (!title || !department || !category || !description) {
-      return res.status(400).json({
-        message: "Please fill all required fields"
-      });
+        // Validate required fields
+        if (!title || !department || !category || !description) {
+            return res.status(400).json({
+                message: "Please fill all required fields"
+            });
+        }
+
+        // Set default priority
+        const ticketPriority = priority || "Medium";
+
+        // Calculate SLA deadline
+        const slaHours = getSlaHours(ticketPriority);
+
+        const slaDeadline = new Date(
+            Date.now() + slaHours * 60 * 60 * 1000
+        );
+
+        // Create ticket
+        const ticket = await Ticket.create({
+            title,
+            department,
+            category,
+            priority: ticketPriority,
+            description,
+            createdBy: req.user._id,
+            attachment: req.file
+                ? `/uploads/${req.file.filename}`
+                : "",
+            slaDeadline
+        });
+
+        // Populate creator
+        await ticket.populate(
+            "createdBy",
+            "name email employeeId department"
+        );
+
+        res.status(201).json({
+            message: "Ticket created successfully",
+            ticket
+        });
+
+    } catch (error) {
+        console.error("Create ticket error:", error);
+
+        res.status(500).json({
+            message: "Server error while creating ticket"
+        });
     }
-
-    const ticket = await Ticket.create({
-      title,
-      department,
-      category,
-      priority: priority || "Medium",
-      description,
-      createdBy: req.user._id,
-      attachment: req.file
-        ? `/uploads/${req.file.filename}`
-        : ""
-    });
-
-    await ticket.populate(
-      "createdBy",
-      "name email employeeId department"
-    );
-
-    res.status(201).json({
-      message: "Ticket created successfully",
-      ticket
-    });
-
-  } catch (error) {
-    console.error("Create ticket error:", error);
-
-    res.status(500).json({
-      message: "Server error while creating ticket"
-    });
-  }
 };
 
 
@@ -60,8 +99,14 @@ const getMyTickets = async (req, res) => {
         const tickets = await Ticket.find({
             createdBy: req.user._id
         })
-            .populate("createdBy", "name email employeeId department")
-            .populate("assignedTo", "name email")
+            .populate(
+                "createdBy",
+                "name email employeeId department"
+            )
+            .populate(
+                "assignedTo",
+                "name email employeeId department"
+            )
             .sort({ createdAt: -1 });
 
         res.status(200).json({
@@ -78,6 +123,7 @@ const getMyTickets = async (req, res) => {
         });
     }
 };
+
 
 // =====================================
 // GET TICKET DETAILS
@@ -101,6 +147,10 @@ const getTicketDetails = async (req, res) => {
                 .populate(
                     "assignedTo",
                     "name email employeeId department"
+                )
+                .populate(
+                    "comments.user",
+                    "name email role employeeId"
                 );
         } else {
             // Employee can only view their own ticket
@@ -115,6 +165,10 @@ const getTicketDetails = async (req, res) => {
                 .populate(
                     "assignedTo",
                     "name email employeeId department"
+                )
+                .populate(
+                    "comments.user",
+                    "name email role employeeId"
                 );
         }
 
@@ -140,6 +194,11 @@ const getTicketDetails = async (req, res) => {
         });
     }
 };
+
+
+// =====================================
+// GET ALL AGENT TICKETS
+// =====================================
 const getAgentTickets = async (req, res) => {
     try {
         const tickets = await Ticket.find()
@@ -158,14 +217,23 @@ const getAgentTickets = async (req, res) => {
             count: tickets.length,
             tickets
         });
+
     } catch (error) {
-        console.error("Get agent tickets error:", error);
+        console.error(
+            "Get agent tickets error:",
+            error
+        );
 
         res.status(500).json({
             message: "Server error while fetching agent tickets"
         });
     }
 };
+
+
+// =====================================
+// ASSIGN TICKET
+// =====================================
 const assignTicket = async (req, res) => {
     try {
         const { id } = req.params;
@@ -177,11 +245,11 @@ const assignTicket = async (req, res) => {
             });
         }
 
-     const agent = await User.findOne({
-    _id: assignedTo,
-    role: "supportAgent",
-    isActive: true
-});
+        const agent = await User.findOne({
+            _id: assignedTo,
+            role: "supportAgent",
+            isActive: true
+        });
 
         if (!agent) {
             return res.status(404).json({
@@ -203,6 +271,11 @@ const assignTicket = async (req, res) => {
         await ticket.save();
 
         await ticket.populate(
+            "createdBy",
+            "name email employeeId department"
+        );
+
+        await ticket.populate(
             "assignedTo",
             "name email employeeId department"
         );
@@ -213,13 +286,21 @@ const assignTicket = async (req, res) => {
         });
 
     } catch (error) {
-        console.error("Assign ticket error:", error);
+        console.error(
+            "Assign ticket error:",
+            error
+        );
 
         res.status(500).json({
             message: "Server error while assigning ticket"
         });
     }
 };
+
+
+// =====================================
+// ACCEPT TICKET
+// =====================================
 const acceptTicket = async (req, res) => {
     try {
         const { id } = req.params;
@@ -234,7 +315,8 @@ const acceptTicket = async (req, res) => {
 
         if (!ticket.assignedTo) {
             return res.status(400).json({
-                message: "Ticket must be assigned before accepting"
+                message:
+                    "Ticket must be assigned before accepting"
             });
         }
 
@@ -243,13 +325,15 @@ const acceptTicket = async (req, res) => {
             req.user._id.toString()
         ) {
             return res.status(403).json({
-                message: "This ticket is assigned to another agent"
+                message:
+                    "This ticket is assigned to another agent"
             });
         }
 
         if (ticket.status !== "Assigned") {
             return res.status(400).json({
-                message: "Only assigned tickets can be accepted"
+                message:
+                    "Only assigned tickets can be accepted"
             });
         }
 
@@ -273,7 +357,10 @@ const acceptTicket = async (req, res) => {
         });
 
     } catch (error) {
-        console.error("Accept ticket error:", error);
+        console.error(
+            "Accept ticket error:",
+            error
+        );
 
         res.status(500).json({
             message: "Server error while accepting ticket"
@@ -281,6 +368,10 @@ const acceptTicket = async (req, res) => {
     }
 };
 
+
+// =====================================
+// UPDATE TICKET STATUS
+// =====================================
 const updateTicketStatus = async (req, res) => {
     try {
         const { id } = req.params;
@@ -320,7 +411,8 @@ const updateTicketStatus = async (req, res) => {
             req.user._id.toString()
         ) {
             return res.status(403).json({
-                message: "You can only update tickets assigned to you"
+                message:
+                    "You can only update tickets assigned to you"
             });
         }
 
@@ -350,11 +442,16 @@ const updateTicketStatus = async (req, res) => {
         );
 
         res.status(500).json({
-            message: "Server error while updating ticket status"
+            message:
+                "Server error while updating ticket status"
         });
     }
 };
 
+
+// =====================================
+// UPDATE TICKET PRIORITY
+// =====================================
 const updateTicketPriority = async (req, res) => {
     try {
         const { id } = req.params;
@@ -399,6 +496,13 @@ const updateTicketPriority = async (req, res) => {
 
         ticket.priority = priority;
 
+        // Recalculate SLA when priority changes
+        const slaHours = getSlaHours(priority);
+
+        ticket.slaDeadline = new Date(
+            Date.now() + slaHours * 60 * 60 * 1000
+        );
+
         await ticket.save();
 
         await ticket.populate(
@@ -429,179 +533,18 @@ const updateTicketPriority = async (req, res) => {
     }
 };
 
+
+// =====================================
+// ADD TICKET COMMENT
+// =====================================
 const addTicketComment = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const { message } = req.body;
-
-    if (!message || !message.trim()) {
-      return res.status(400).json({
-        message: "Comment message is required"
-      });
-    }
-
-    const ticket = await Ticket.findById(id);
-
-    if (!ticket) {
-      return res.status(404).json({
-        message: "Ticket not found"
-      });
-    }
-
-    // Employee can comment only on their own ticket
-    if (
-      req.user.role === "employee" &&
-      ticket.createdBy.toString() !== req.user._id.toString()
-    ) {
-      return res.status(403).json({
-        message: "You can only comment on your own tickets"
-      });
-    }
-
-    // Support agent can comment only on assigned ticket
-    if (
-      req.user.role === "supportAgent" &&
-      ticket.assignedTo &&
-      ticket.assignedTo.toString() !== req.user._id.toString()
-    ) {
-      return res.status(403).json({
-        message: "You can only comment on tickets assigned to you"
-      });
-    }
-
-    // ticket.comments.push({
-    //   user: req.user._id,
-    //   message: message.trim()
-    // });
-
-    if (!ticket.comments) {
-    ticket.comments = [];
-}
-
-ticket.comments.push({
-    user: req.user._id,
-    message: message.trim()
-});
-
-    await ticket.save();
-
-    await ticket.populate([
-      {
-        path: "comments.user",
-        select: "name email role employeeId"
-      },
-      {
-        path: "createdBy",
-        select: "name email employeeId department"
-      },
-      {
-        path: "assignedTo",
-        select: "name email employeeId department"
-      }
-    ]);
-
-    res.status(200).json({
-      message: "Comment added successfully",
-      ticket
-    });
-
-  } catch (error) {
-    console.error("Add comment error:", error);
-
-    res.status(500).json({
-      message: "Server error while adding comment"
-    });
-  }
-};
-
-const transferTicket = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const { assignedTo } = req.body;
-
-    if (!assignedTo) {
-      return res.status(400).json({
-        message: "Please select a support agent"
-      });
-    }
-
-    const ticket = await Ticket.findById(id);
-
-    if (!ticket) {
-      return res.status(404).json({
-        message: "Ticket not found"
-      });
-    }
-
-    if (!ticket.assignedTo) {
-      return res.status(400).json({
-        message: "Ticket is not currently assigned"
-      });
-    }
-
-    // Only the currently assigned agent can transfer
-    if (
-      ticket.assignedTo.toString() !== req.user._id.toString()
-    ) {
-      return res.status(403).json({
-        message: "Only the assigned agent can transfer this ticket"
-      });
-    }
-
-    const newAgent = await User.findById(assignedTo);
-
-    if (!newAgent) {
-      return res.status(404).json({
-        message: "Support agent not found"
-      });
-    }
-
-    if (newAgent.role !== "supportAgent") {
-      return res.status(400).json({
-        message: "Selected user is not a support agent"
-      });
-    }
-
-    ticket.assignedTo = newAgent._id;
-
-    // After transfer, ticket becomes Assigned again
-    ticket.status = "Assigned";
-
-    await ticket.save();
-
-    await ticket.populate(
-      "createdBy",
-      "name email employeeId department"
-    );
-
-    await ticket.populate(
-      "assignedTo",
-      "name email employeeId department"
-    );
-
-    res.status(200).json({
-      message: "Ticket transferred successfully",
-      ticket
-    });
-
-  } catch (error) {
-    console.error("Transfer ticket error:", error);
-
-    res.status(500).json({
-      message: "Server error while transferring ticket"
-    });
-  }
-};
-
-
-const addResolution = async (req, res) => {
     try {
         const { id } = req.params;
-        const { resolution } = req.body;
+        const { message } = req.body;
 
-        if (!resolution || !resolution.trim()) {
+        if (!message || !message.trim()) {
             return res.status(400).json({
-                message: "Resolution notes are required"
+                message: "Comment message is required"
             });
         }
 
@@ -613,18 +556,137 @@ const addResolution = async (req, res) => {
             });
         }
 
+        // Employee can comment only on own ticket
         if (
-            req.user.role === "supportAgent" &&
-            (!ticket.assignedTo ||
-                ticket.assignedTo.toString() !== req.user._id.toString())
+            req.user.role === "employee" &&
+            ticket.createdBy.toString() !==
+                req.user._id.toString()
         ) {
             return res.status(403).json({
-                message: "You can only resolve tickets assigned to you"
+                message:
+                    "You can only comment on your own tickets"
             });
         }
 
-        ticket.resolution = resolution.trim();
-        ticket.status = "Resolved";
+        // Support agent can comment only on assigned ticket
+        if (
+            req.user.role === "supportAgent" &&
+            ticket.assignedTo &&
+            ticket.assignedTo.toString() !==
+                req.user._id.toString()
+        ) {
+            return res.status(403).json({
+                message:
+                    "You can only comment on tickets assigned to you"
+            });
+        }
+
+        if (!ticket.comments) {
+            ticket.comments = [];
+        }
+
+        ticket.comments.push({
+            user: req.user._id,
+            message: message.trim()
+        });
+
+        await ticket.save();
+
+        await ticket.populate([
+            {
+                path: "comments.user",
+                select:
+                    "name email role employeeId"
+            },
+            {
+                path: "createdBy",
+                select:
+                    "name email employeeId department"
+            },
+            {
+                path: "assignedTo",
+                select:
+                    "name email employeeId department"
+            }
+        ]);
+
+        res.status(200).json({
+            message: "Comment added successfully",
+            ticket
+        });
+
+    } catch (error) {
+        console.error(
+            "Add comment error:",
+            error
+        );
+
+        res.status(500).json({
+            message:
+                "Server error while adding comment"
+        });
+    }
+};
+
+
+// =====================================
+// TRANSFER TICKET
+// =====================================
+const transferTicket = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { assignedTo } = req.body;
+
+        if (!assignedTo) {
+            return res.status(400).json({
+                message:
+                    "Please select a support agent"
+            });
+        }
+
+        const ticket = await Ticket.findById(id);
+
+        if (!ticket) {
+            return res.status(404).json({
+                message: "Ticket not found"
+            });
+        }
+
+        if (!ticket.assignedTo) {
+            return res.status(400).json({
+                message:
+                    "Ticket is not currently assigned"
+            });
+        }
+
+        // Only currently assigned agent can transfer
+        if (
+            ticket.assignedTo.toString() !==
+            req.user._id.toString()
+        ) {
+            return res.status(403).json({
+                message:
+                    "Only the assigned agent can transfer this ticket"
+            });
+        }
+
+        const newAgent = await User.findOne({
+            _id: assignedTo,
+            role: "supportAgent",
+            isActive: true
+        });
+
+        if (!newAgent) {
+            return res.status(404).json({
+                message:
+                    "Support agent not found"
+            });
+        }
+
+        ticket.assignedTo = newAgent._id;
+
+        // Ticket becomes Assigned again
+        ticket.status = "Assigned";
 
         await ticket.save();
 
@@ -639,21 +701,77 @@ const addResolution = async (req, res) => {
         );
 
         res.status(200).json({
-            message: "Ticket resolved successfully",
+            message:
+                "Ticket transferred successfully",
             ticket
+        });
+
+    } catch (error) {
+        console.error(
+            "Transfer ticket error:",
+            error
+        );
+
+        res.status(500).json({
+            message:
+                "Server error while transferring ticket"
+        });
+    }
+};
+
+
+// =====================================
+// RESOLVE TICKET
+// =====================================
+const addResolution = async (req, res) => {
+    try {
+        const { resolution } = req.body;
+
+        if (!resolution || !resolution.trim()) {
+            return res.status(400).json({
+                success: false,
+                message: "Resolution is required."
+            });
+        }
+
+        const ticket = await Ticket.findById(req.params.id);
+
+        if (!ticket) {
+            return res.status(404).json({
+                success: false,
+                message: "Ticket not found."
+            });
+        }
+
+        ticket.resolution = resolution.trim();
+        ticket.status = "Resolved";
+        ticket.resolvedAt = new Date();
+
+        await ticket.save();
+
+        const updatedTicket = await Ticket.findById(ticket._id)
+            .populate("createdBy", "name email employeeId department")
+            .populate("assignedTo", "name email employeeId department");
+
+        res.status(200).json({
+            success: true,
+            message: "Ticket resolved successfully.",
+            ticket: updatedTicket
         });
 
     } catch (error) {
         console.error("Add resolution error:", error);
 
         res.status(500).json({
-            message: "Server error while resolving ticket"
+            success: false,
+            message: "Failed to resolve ticket."
         });
     }
 };
 
-
-
+// =====================================
+// CONFIRM RESOLUTION
+// =====================================
 const confirmResolution = async (req, res) => {
     try {
         const { id } = req.params;
@@ -666,20 +784,23 @@ const confirmResolution = async (req, res) => {
             });
         }
 
-        // Only the employee who created the ticket can confirm
+        // Employee can confirm only own ticket
         if (
             req.user.role === "employee" &&
-            ticket.createdBy.toString() !== req.user._id.toString()
+            ticket.createdBy.toString() !==
+                req.user._id.toString()
         ) {
             return res.status(403).json({
-                message: "You can only confirm your own tickets"
+                message:
+                    "You can only confirm your own tickets"
             });
         }
 
-        // Ticket must be resolved first
+        // Ticket must be resolved
         if (ticket.status !== "Resolved") {
             return res.status(400).json({
-                message: "Ticket must be resolved before confirmation"
+                message:
+                    "Ticket must be resolved before confirmation"
             });
         }
 
@@ -698,20 +819,28 @@ const confirmResolution = async (req, res) => {
         );
 
         res.status(200).json({
-            message: "Resolution confirmed. Ticket closed successfully",
+            message:
+                "Resolution confirmed. Ticket closed successfully",
             ticket
         });
 
     } catch (error) {
-        console.error("Confirm resolution error:", error);
+        console.error(
+            "Confirm resolution error:",
+            error
+        );
 
         res.status(500).json({
-            message: "Server error while confirming resolution"
+            message:
+                "Server error while confirming resolution"
         });
     }
 };
 
 
+// =====================================
+// REOPEN TICKET
+// =====================================
 const reopenTicket = async (req, res) => {
     try {
         const { id } = req.params;
@@ -724,25 +853,35 @@ const reopenTicket = async (req, res) => {
             });
         }
 
-        // Only the employee who created the ticket can reopen it
+        // Employee can reopen only own ticket
         if (
             req.user.role === "employee" &&
-            ticket.createdBy.toString() !== req.user._id.toString()
+            ticket.createdBy.toString() !==
+                req.user._id.toString()
         ) {
             return res.status(403).json({
-                message: "You can only reopen your own tickets"
+                message:
+                    "You can only reopen your own tickets"
             });
         }
 
-        // Ticket must be closed before reopening
+        // Ticket must be closed
         if (ticket.status !== "Closed") {
             return res.status(400).json({
-                message: "Only closed tickets can be reopened"
+                message:
+                    "Only closed tickets can be reopened"
             });
         }
 
         ticket.status = "Open";
         ticket.resolution = "";
+
+        // Give reopened ticket a fresh SLA
+        const slaHours = getSlaHours(ticket.priority);
+
+        ticket.slaDeadline = new Date(
+            Date.now() + slaHours * 60 * 60 * 1000
+        );
 
         await ticket.save();
 
@@ -757,20 +896,28 @@ const reopenTicket = async (req, res) => {
         );
 
         res.status(200).json({
-            message: "Ticket reopened successfully",
+            message:
+                "Ticket reopened successfully",
             ticket
         });
 
     } catch (error) {
-        console.error("Reopen ticket error:", error);
+        console.error(
+            "Reopen ticket error:",
+            error
+        );
 
         res.status(500).json({
-            message: "Server error while reopening ticket"
+            message:
+                "Server error while reopening ticket"
         });
     }
 };
 
 
+// =====================================
+// EXPORTS
+// =====================================
 module.exports = {
     createTicket,
     getMyTickets,
@@ -785,8 +932,4 @@ module.exports = {
     addResolution,
     confirmResolution,
     reopenTicket
-    
-    
-
-
 };

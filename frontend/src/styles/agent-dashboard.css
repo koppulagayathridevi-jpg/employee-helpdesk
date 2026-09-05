@@ -496,3 +496,256 @@
     }
 }
 
+
+/* ==========================================
+   AGENT LAYOUT
+========================================== */
+
+.agent-layout {
+    min-height: 100vh;
+    background: #f5f7fb;
+}
+
+.agent-main {
+    margin-left: 260px;
+    min-height: 100vh;
+    padding: 30px;
+}
+
+/* ==========================================
+   LOADING
+========================================== */
+
+.agent-dashboard-loading {
+    min-height: calc(100vh - 60px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #6b7280;
+}
+
+.agent-loading-spinner {
+    font-size: 28px;
+    margin-bottom: 10px;
+}
+
+.agent-loading-spinner i {
+    display: inline-block;
+    animation: agent-spin 1s linear infinite;
+}
+
+@keyframes agent-spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* ==========================================
+   WELCOME
+========================================== */
+
+.agent-welcome {
+    margin: 20px 0;
+    padding: 16px 20px;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.agent-welcome-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 10px;
+    background: #eff6ff;
+    color: #2563eb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 19px;
+}
+
+.agent-welcome span {
+    display: block;
+    font-size: 12px;
+    color: #6b7280;
+}
+
+.agent-welcome strong {
+    display: block;
+    margin-top: 2px;
+    font-size: 15px;
+    color: #111827;
+}
+
+/* ==========================================
+   ERROR
+========================================== */
+
+.agent-error {
+    margin-bottom: 20px;
+    padding: 13px 16px;
+    border-radius: 9px;
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    color: #b91c1c;
+    display: flex;
+    align-items: center;
+    gap: 9px;
+}
+
+/* ==========================================
+   TICKET TITLE
+========================================== */
+
+.agent-ticket-title {
+    max-width: 280px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* ==========================================
+   EMPTY STATE
+========================================== */
+
+.no-agent-tickets {
+    padding: 60px 20px;
+    text-align: center;
+}
+
+.no-ticket-icon {
+    width: 60px;
+    height: 60px;
+    margin: 0 auto 15px;
+    border-radius: 50%;
+    background: #f3f4f6;
+    color: #6b7280;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 25px;
+}
+
+.no-agent-tickets h3 {
+    margin: 0 0 6px;
+    font-size: 17px;
+    color: #111827;
+}
+
+.no-agent-tickets p {
+    margin: 0;
+    color: #6b7280;
+    font-size: 13px;
+}
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media (max-width: 768px) {
+
+    .agent-main {
+        margin-left: 72px;
+        padding: 20px;
+    }
+
+}
+
+@media (max-width: 576px) {
+
+    .agent-main {
+        padding: 15px;
+    }
+
+    .agent-dashboard-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+
+    .agent-stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .agent-welcome {
+        padding: 14px;
+    }
+
+}
+
+/* =========================
+   HEADER ACTIONS
+========================= */
+
+.agent-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+
+/* =========================
+   LOGOUT BUTTON
+========================= */
+
+.agent-logout-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    padding: 12px 20px;
+
+    border: none;
+    border-radius: 10px;
+
+    background: #dc3545;
+    color: #ffffff;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: all 0.2s ease;
+}
+
+.agent-logout-btn:hover {
+    background: #bb2d3b;
+    transform: translateY(-1px);
+}
+
+.agent-logout-btn i {
+    font-size: 16px;
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 768px) {
+
+    .agent-dashboard-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .agent-header-actions {
+        width: 100%;
+        flex-wrap: wrap;
+    }
+
+    .view-all-btn,
+    .agent-logout-btn {
+        flex: 1;
+    }
+}

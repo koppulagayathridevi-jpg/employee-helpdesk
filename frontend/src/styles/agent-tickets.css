@@ -1,160 +1,383 @@
+/* =========================================
+   AGENT TICKETS PAGE
+========================================= */
+
 .agent-tickets-page {
-    padding: 30px;
+    width: 100%;
+    min-height: 100vh;
+    padding: 35px 40px;
+    background: #f6f8f7;
+    box-sizing: border-box;
 }
 
+
+/* =========================================
+   HEADER
+========================================= */
+
 .agent-tickets-header {
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 25px;
+    gap: 25px;
+    margin-bottom: 28px;
 }
 
 .agent-page-label {
+    display: inline-block;
+    margin-bottom: 6px;
     font-size: 11px;
     font-weight: 700;
-    letter-spacing: 1px;
+    letter-spacing: 1.2px;
     color: #198754;
 }
 
 .agent-tickets-header h1 {
-    margin: 5px 0;
-    font-size: 30px;
+    margin: 0 0 6px;
+    font-size: 32px;
+    line-height: 1.2;
+    font-weight: 700;
     color: #1f2937;
 }
 
 .agent-tickets-header p {
     margin: 0;
     font-size: 14px;
+    line-height: 1.5;
     color: #6b7280;
 }
 
+
+/* =========================================
+   BACK TO DASHBOARD BUTTON
+========================================= */
+
 .back-dashboard-btn {
-    display: flex;
+    display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 8px;
-    padding: 10px 16px;
+
+    padding: 11px 17px;
+
     border: 1px solid #198754;
     border-radius: 8px;
+
+    background: #ffffff;
     color: #198754;
-    background: white;
+
     text-decoration: none;
+
     font-size: 13px;
     font-weight: 600;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+
+    white-space: nowrap;
+}
+
+.back-dashboard-btn i {
+    font-size: 14px;
 }
 
 .back-dashboard-btn:hover {
     background: #198754;
-    color: white;
+    color: #ffffff;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(25, 135, 84, 0.15);
 }
 
+
+/* =========================================
+   FILTER SECTION
+========================================= */
+
 .agent-filters {
+    width: 100%;
+
     display: grid;
-    grid-template-columns: 2fr 1fr 1fr 1fr;
+    grid-template-columns: minmax(260px, 2fr) 1fr 1fr 1fr;
+
     gap: 12px;
-    margin-bottom: 15px;
+
+    margin-bottom: 16px;
 }
+
+
+/* =========================================
+   SEARCH
+========================================= */
 
 .agent-search {
     position: relative;
+    width: 100%;
 }
 
 .agent-search i {
     position: absolute;
+
     left: 14px;
     top: 50%;
-    transform: translateY(-50%);
-    color: #9ca3af;
-}
 
-.agent-search input,
-.agent-filters select {
-    width: 100%;
-    height: 44px;
-    border: 1px solid #dfe5e2;
-    border-radius: 8px;
-    background: white;
-    padding: 0 14px;
-    font-size: 13px;
-    color: #374151;
-    outline: none;
+    transform: translateY(-50%);
+
+    color: #9ca3af;
+
+    font-size: 15px;
+
+    pointer-events: none;
 }
 
 .agent-search input {
-    padding-left: 40px;
+    width: 100%;
+    height: 46px;
+
+    box-sizing: border-box;
+
+    padding: 0 14px 0 42px;
+
+    border: 1px solid #dfe5e2;
+    border-radius: 9px;
+
+    background: #ffffff;
+
+    color: #374151;
+
+    font-size: 13px;
+
+    outline: none;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
 }
 
-.agent-search input:focus,
+.agent-search input::placeholder {
+    color: #9ca3af;
+}
+
+.agent-search input:focus {
+    border-color: #198754;
+
+    box-shadow: 0 0 0 3px rgba(25, 135, 84, 0.08);
+}
+
+
+/* =========================================
+   FILTER SELECTS
+========================================= */
+
+.agent-filters select {
+    width: 100%;
+    height: 46px;
+
+    box-sizing: border-box;
+
+    padding: 0 35px 0 14px;
+
+    border: 1px solid #dfe5e2;
+    border-radius: 9px;
+
+    background: #ffffff;
+
+    color: #374151;
+
+    font-size: 13px;
+
+    outline: none;
+
+    cursor: pointer;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
 .agent-filters select:focus {
     border-color: #198754;
+
+    box-shadow: 0 0 0 3px rgba(25, 135, 84, 0.08);
 }
 
+
+/* =========================================
+   TICKET COUNT
+========================================= */
+
 .agent-ticket-count {
-    margin-bottom: 12px;
+    margin-bottom: 14px;
+
     color: #6b7280;
+
     font-size: 13px;
 }
 
 .agent-ticket-count strong {
     color: #1f2937;
+    font-weight: 700;
 }
 
+
+/* =========================================
+   MAIN TICKETS CARD
+========================================= */
+
 .agent-all-tickets-card {
-    background: white;
+    width: 100%;
+
+    background: #ffffff;
+
     border: 1px solid #e5e7eb;
     border-radius: 12px;
+
     overflow: hidden;
+
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.025);
 }
+
+
+/* =========================================
+   TABLE WRAPPER
+========================================= */
 
 .agent-all-table-wrapper {
     width: 100%;
+
     overflow-x: auto;
+
+    -webkit-overflow-scrolling: touch;
 }
+
+
+/* =========================================
+   TABLE
+========================================= */
 
 .agent-all-tickets-table {
     width: 100%;
+    min-width: 900px;
+
     border-collapse: collapse;
 }
 
+
+/* =========================================
+   TABLE HEADER
+========================================= */
+
 .agent-all-tickets-table th {
-    padding: 14px 16px;
+    padding: 15px 16px;
+
     text-align: left;
+
     background: #f8faf9;
+
     border-bottom: 1px solid #e5e7eb;
+
     color: #6b7280;
+
     font-size: 11px;
     font-weight: 700;
+
+    letter-spacing: 0.2px;
+
     white-space: nowrap;
 }
 
+
+/* =========================================
+   TABLE BODY
+========================================= */
+
 .agent-all-tickets-table td {
-    padding: 16px;
+    padding: 17px 16px;
+
     border-bottom: 1px solid #f0f2f1;
+
     color: #374151;
+
     font-size: 13px;
+
+    vertical-align: middle;
+
     white-space: nowrap;
+}
+
+.agent-all-tickets-table tbody tr {
+    transition: background 0.15s ease;
+}
+
+.agent-all-tickets-table tbody tr:hover {
+    background: #fafcfb;
 }
 
 .agent-all-tickets-table tr:last-child td {
     border-bottom: none;
 }
 
+
+/* =========================================
+   TICKET ID
+========================================= */
+
 .agent-all-tickets-table td strong {
     color: #198754;
+    font-weight: 700;
 }
+
+
+/* =========================================
+   TICKET TITLE
+========================================= */
 
 .agent-ticket-title {
-    max-width: 220px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
+    max-width: 240px;
 
-.agent-ticket-badge {
-    display: inline-block;
-    padding: 5px 9px;
-    border-radius: 20px;
-    font-size: 11px;
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+
+    color: #1f2937 !important;
+
     font-weight: 600;
 }
+
+
+/* =========================================
+   COMMON BADGE
+========================================= */
+
+.agent-ticket-badge {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    min-width: 60px;
+
+    padding: 5px 10px;
+
+    border-radius: 20px;
+
+    font-size: 11px;
+    font-weight: 600;
+
+    line-height: 1.2;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================
+   STATUS COLORS
+========================================= */
 
 .agent-status-open {
     background: #e8f1ff;
@@ -183,8 +406,13 @@
 
 .agent-status-closed {
     background: #eeeeee;
-    color: #555;
+    color: #555555;
 }
+
+
+/* =========================================
+   PRIORITY COLORS
+========================================= */
 
 .agent-priority-critical {
     background: #fde8e8;
@@ -206,77 +434,289 @@
     color: #198754;
 }
 
+
+/* =========================================
+   VIEW BUTTON
+========================================= */
+
 .agent-ticket-view-btn {
-    display: inline-block;
-    padding: 6px 12px;
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    min-width: 48px;
+
+    padding: 7px 13px;
+
     border: 1px solid #198754;
-    border-radius: 6px;
+    border-radius: 7px;
+
+    background: #ffffff;
+
     color: #198754;
+
     text-decoration: none;
+
     font-size: 11px;
     font-weight: 600;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
 }
 
 .agent-ticket-view-btn:hover {
     background: #198754;
-    color: white;
+    color: #ffffff;
+
+    transform: translateY(-1px);
+
+    box-shadow: 0 3px 8px rgba(25, 135, 84, 0.15);
 }
 
+
+/* =========================================
+   NO RESULTS
+========================================= */
+
 .no-agent-results {
-    padding: 60px 20px;
+    padding: 75px 20px;
+
     text-align: center;
 }
 
 .no-agent-results i {
-    font-size: 35px;
+    display: block;
+
+    margin-bottom: 15px;
+
+    font-size: 38px;
+
     color: #198754;
 }
 
 .no-agent-results h3 {
-    margin: 12px 0 5px;
-    font-size: 18px;
+    margin: 0 0 6px;
+
+    font-size: 19px;
+
+    font-weight: 700;
+
     color: #1f2937;
 }
 
 .no-agent-results p {
     margin: 0;
+
     font-size: 13px;
+
     color: #6b7280;
 }
 
+
+/* =========================================
+   LOADING
+========================================= */
+
 .agent-tickets-loading {
-    padding: 50px;
-    text-align: center;
+    min-height: 100vh;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 10px;
+
+    background: #f6f8f7;
+
+    color: #6b7280;
+
     font-size: 15px;
 }
 
-.agent-tickets-error {
-    margin-bottom: 20px;
-    padding: 14px;
-    border-radius: 8px;
-    background: #fff5f5;
-    color: #dc3545;
-    font-size: 13px;
+.agent-tickets-loading i {
+    color: #198754;
+
+    font-size: 18px;
+
+    animation: agentLoadingSpin 1s linear infinite;
 }
 
-@media (max-width: 1000px) {
-    .agent-filters {
-        grid-template-columns: 1fr 1fr;
+@keyframes agentLoadingSpin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
     }
 }
 
-@media (max-width: 700px) {
+
+/* =========================================
+   ERROR
+========================================= */
+
+.agent-tickets-error {
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    margin-bottom: 20px;
+
+    padding: 13px 15px;
+
+    border: 1px solid #f5c2c7;
+
+    border-radius: 8px;
+
+    background: #fff5f5;
+
+    color: #dc3545;
+
+    font-size: 13px;
+}
+
+.agent-tickets-error i {
+    font-size: 15px;
+}
+
+
+/* =========================================
+   LARGE TABLETS
+========================================= */
+
+@media (max-width: 1100px) {
+
     .agent-tickets-page {
-        padding: 20px;
+        padding: 30px;
+    }
+
+    .agent-filters {
+        grid-template-columns: 1.5fr 1fr 1fr;
+    }
+
+    .agent-search {
+        grid-column: span 3;
+    }
+}
+
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media (max-width: 800px) {
+
+    .agent-tickets-page {
+        padding: 25px 20px;
     }
 
     .agent-tickets-header {
         align-items: flex-start;
+
         flex-direction: column;
-        gap: 15px;
+
+        gap: 18px;
+    }
+
+    .back-dashboard-btn {
+        align-self: flex-start;
+    }
+
+    .agent-filters {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .agent-search {
+        grid-column: span 2;
+    }
+
+    .agent-tickets-header h1 {
+        font-size: 28px;
+    }
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 550px) {
+
+    .agent-tickets-page {
+        padding: 20px 14px;
+    }
+
+    .agent-tickets-header {
+        margin-bottom: 22px;
+    }
+
+    .agent-tickets-header h1 {
+        font-size: 25px;
+    }
+
+    .agent-tickets-header p {
+        font-size: 13px;
+    }
+
+    .agent-page-label {
+        font-size: 10px;
+    }
+
+    .back-dashboard-btn {
+        width: 100%;
     }
 
     .agent-filters {
         grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .agent-search {
+        grid-column: span 1;
+    }
+
+    .agent-ticket-count {
+        font-size: 12px;
+    }
+
+    .agent-all-tickets-card {
+        border-radius: 10px;
+    }
+
+    .agent-all-tickets-table {
+        min-width: 850px;
+    }
+}
+
+
+/* =========================================
+   VERY SMALL MOBILE
+========================================= */
+
+@media (max-width: 380px) {
+
+    .agent-tickets-page {
+        padding: 18px 10px;
+    }
+
+    .agent-tickets-header h1 {
+        font-size: 23px;
+    }
+
+    .agent-tickets-header p {
+        font-size: 12px;
+    }
+
+    .agent-search input,
+    .agent-filters select {
+        height: 44px;
     }
 }

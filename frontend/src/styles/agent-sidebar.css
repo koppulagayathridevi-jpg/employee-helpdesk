@@ -1,0 +1,180 @@
+.agent-sidebar {
+    width: 260px;
+    min-height: 100vh;
+    background: #111827;
+    color: #ffffff;
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    z-index: 1000;
+}
+
+/* ==========================================
+   LOGO
+========================================== */
+
+.agent-sidebar-logo {
+    height: 82px;
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.agent-logo-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 10px;
+    background: #2563eb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+}
+
+.agent-sidebar-logo h2 {
+    margin: 0;
+    font-size: 19px;
+    font-weight: 700;
+}
+
+.agent-sidebar-logo span {
+    display: block;
+    margin-top: 2px;
+    font-size: 11px;
+    color: #9ca3af;
+}
+
+/* ==========================================
+   LABEL
+========================================== */
+
+.agent-sidebar-label {
+    padding: 26px 24px 12px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.4px;
+    color: #6b7280;
+}
+
+/* ==========================================
+   NAVIGATION
+========================================== */
+
+.agent-sidebar-nav {
+    padding: 0 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.agent-nav-link {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    padding: 13px 14px;
+    border-radius: 9px;
+    color: #9ca3af;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: 0.2s ease;
+}
+
+.agent-nav-link i {
+    width: 20px;
+    text-align: center;
+    font-size: 17px;
+}
+
+.agent-nav-link:hover {
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.agent-nav-link.active {
+    color: #ffffff;
+    background: #2563eb;
+}
+
+/* ==========================================
+   BOTTOM
+========================================== */
+
+.agent-sidebar-bottom {
+    margin-top: auto;
+    padding: 18px 12px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.agent-logout-btn {
+    width: 100%;
+    border: none;
+    background: transparent;
+    color: #9ca3af;
+    padding: 13px 14px;
+    border-radius: 9px;
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    font-size: 14px;
+    cursor: pointer;
+    text-align: left;
+    transition: 0.2s ease;
+}
+
+.agent-logout-btn i {
+    width: 20px;
+    text-align: center;
+    font-size: 17px;
+}
+
+.agent-logout-btn:hover {
+    background: rgba(239, 68, 68, 0.12);
+    color: #f87171;
+}
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media (max-width: 768px) {
+
+    .agent-sidebar {
+        width: 72px;
+    }
+
+    .agent-sidebar-logo {
+        padding: 0;
+        justify-content: center;
+    }
+
+    .agent-sidebar-logo > div:last-child,
+    .agent-sidebar-label,
+    .agent-nav-link span,
+    .agent-logout-btn span {
+        display: none;
+    }
+
+    .agent-nav-link {
+        justify-content: center;
+        padding: 14px 0;
+    }
+
+    .agent-nav-link i {
+        margin: 0;
+    }
+
+    .agent-sidebar-bottom {
+        padding: 12px 8px;
+    }
+
+    .agent-logout-btn {
+        justify-content: center;
+        padding: 14px 0;
+    }
+}

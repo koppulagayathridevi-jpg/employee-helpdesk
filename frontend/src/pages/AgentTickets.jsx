@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import API from "../api/api";
-import Layout from "../components/Layout";
 import "../styles/agent-tickets.css";
 
 function AgentTickets() {
@@ -10,8 +9,13 @@ function AgentTickets() {
     const [statusFilter, setStatusFilter] = useState("All Status");
     const [priorityFilter, setPriorityFilter] = useState("All Priorities");
     const [departmentFilter, setDepartmentFilter] = useState("All Departments");
+
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
+
+    // ==============================
+    // FETCH TICKETS
+    // ==============================
 
     useEffect(() => {
         fetchTickets();
@@ -38,6 +42,10 @@ function AgentTickets() {
             setLoading(false);
         }
     };
+
+    // ==============================
+    // FILTER TICKETS
+    // ==============================
 
     const filteredTickets = tickets.filter((ticket) => {
         const searchText = search.toLowerCase().trim();
@@ -79,11 +87,21 @@ function AgentTickets() {
         );
     });
 
+    // ==============================
+    // TICKET ID
+    // ==============================
+
     const getTicketId = (id) => {
-        if (!id) return "TK-000000";
+        if (!id) {
+            return "TK-000000";
+        }
 
         return `TK-${id.slice(-6).toUpperCase()}`;
     };
+
+    // ==============================
+    // STATUS CLASS
+    // ==============================
 
     const getStatusClass = (status) => {
         switch (status) {
@@ -110,6 +128,10 @@ function AgentTickets() {
         }
     };
 
+    // ==============================
+    // PRIORITY CLASS
+    // ==============================
+
     const getPriorityClass = (priority) => {
         switch (priority) {
             case "Critical":
@@ -129,8 +151,14 @@ function AgentTickets() {
         }
     };
 
+    // ==============================
+    // FORMAT DATE
+    // ==============================
+
     const formatDate = (date) => {
-        if (!date) return "-";
+        if (!date) {
+            return "-";
+        }
 
         const formattedDate = new Date(date);
 
@@ -145,251 +173,425 @@ function AgentTickets() {
         });
     };
 
+    // ==============================
+    // LOADING
+    // ==============================
+
     if (loading) {
         return (
-            <Layout
-                role="supportAgent"
-                userName="Support Agent"
-            >
-                <div className="agent-tickets-loading">
-                    Loading tickets...
-                </div>
-            </Layout>
+            <div className="agent-tickets-loading">
+                <i className="bi bi-hourglass-split"></i>
+                <span>Loading tickets...</span>
+            </div>
         );
     }
 
+    // ==============================
+    // PAGE
+    // ==============================
+
     return (
-        <Layout
-            role="supportAgent"
-            userName="Support Agent"
-        >
-            <div className="agent-tickets-page">
+        <div className="agent-tickets-page">
 
-                {/* Header */}
+            {/* ==============================
+                HEADER
+            ============================== */}
 
-                <div className="agent-tickets-header">
+            <div className="agent-tickets-header">
 
-                    <div>
-                        <span className="agent-page-label">
-                            SUPPORT CENTER
-                        </span>
+                <div>
 
-                        <h1>
-                            All Tickets
-                        </h1>
+                    <span className="agent-page-label">
+                        SUPPORT CENTER
+                    </span>
 
-                        <p>
-                            View and manage employee support requests.
-                        </p>
-                    </div>
+                    <h1>
+                        All Tickets
+                    </h1>
 
-                    <Link
-                        to="/agent-dashboard"
-                        className="back-dashboard-btn"
-                    >
-                        <i className="bi bi-arrow-left"></i>
-                        Dashboard
-                    </Link>
+                    <p>
+                        View and manage employee support requests.
+                    </p>
 
                 </div>
 
-                {/* Error */}
-
-                {error && (
-                    <div className="agent-tickets-error">
-                        {error}
-                    </div>
-                )}
-
-                {/* Filters */}
-
-                <div className="agent-filters">
-
-                    <div className="agent-search">
-                        <i className="bi bi-search"></i>
-
-                        <input
-                            type="text"
-                            placeholder="Search by ticket ID or title..."
-                            value={search}
-                            onChange={(e) =>
-                                setSearch(e.target.value)
-                            }
-                        />
-                    </div>
-
-                    <select
-                        value={statusFilter}
-                        onChange={(e) =>
-                            setStatusFilter(e.target.value)
-                        }
-                    >
-                        <option>All Status</option>
-                        <option>Open</option>
-                        <option>Assigned</option>
-                        <option>In Progress</option>
-                        <option>Waiting for Employee</option>
-                        <option>Resolved</option>
-                        <option>Closed</option>
-                    </select>
-
-                    <select
-                        value={priorityFilter}
-                        onChange={(e) =>
-                            setPriorityFilter(e.target.value)
-                        }
-                    >
-                        <option>All Priorities</option>
-                        <option>Critical</option>
-                        <option>High</option>
-                        <option>Medium</option>
-                        <option>Low</option>
-                    </select>
-
-                    <select
-                        value={departmentFilter}
-                        onChange={(e) =>
-                            setDepartmentFilter(e.target.value)
-                        }
-                    >
-                        <option>All Departments</option>
-                        <option>IT Support</option>
-                        <option>Human Resources</option>
-                        <option>Finance</option>
-                        <option>Administration</option>
-                    </select>
-
-                </div>
-
-                {/* Ticket Count */}
-
-                <div className="agent-ticket-count">
-                    Showing{" "}
-                    <strong>{filteredTickets.length}</strong>{" "}
-                    of{" "}
-                    <strong>{tickets.length}</strong> tickets
-                </div>
-
-                {/* Tickets Table */}
-
-                <div className="agent-all-tickets-card">
-
-                    {filteredTickets.length === 0 ? (
-
-                        <div className="no-agent-results">
-                            <i className="bi bi-ticket-perforated"></i>
-
-                            <h3>
-                                No tickets found
-                            </h3>
-
-                            <p>
-                                Try changing your search or filters.
-                            </p>
-                        </div>
-
-                    ) : (
-
-                        <div className="agent-all-table-wrapper">
-
-                            <table className="agent-all-tickets-table">
-
-                                <thead>
-                                    <tr>
-                                        <th>Ticket</th>
-                                        <th>Title</th>
-                                        <th>Employee</th>
-                                        <th>Department</th>
-                                        <th>Priority</th>
-                                        <th>Status</th>
-                                        <th>Created</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-
-                                <tbody>
-
-                                    {filteredTickets.map((ticket) => {
-
-                                        const department =
-                                            ticket.department ||
-                                            ticket.createdBy?.department ||
-                                            "-";
-
-                                        return (
-                                            <tr key={ticket._id}>
-
-                                                <td>
-                                                    <strong>
-                                                        {getTicketId(
-                                                            ticket._id
-                                                        )}
-                                                    </strong>
-                                                </td>
-
-                                                <td className="agent-ticket-title">
-                                                    {ticket.title}
-                                                </td>
-
-                                                <td>
-                                                    {ticket.createdBy?.name ||
-                                                        "-"}
-                                                </td>
-
-                                                <td>
-                                                    {department}
-                                                </td>
-
-                                                <td>
-                                                    <span
-                                                        className={`agent-ticket-badge ${getPriorityClass(
-                                                            ticket.priority
-                                                        )}`}
-                                                    >
-                                                        {ticket.priority}
-                                                    </span>
-                                                </td>
-
-                                                <td>
-                                                    <span
-                                                        className={`agent-ticket-badge ${getStatusClass(
-                                                            ticket.status
-                                                        )}`}
-                                                    >
-                                                        {ticket.status}
-                                                    </span>
-                                                </td>
-
-                                                <td>
-                                                    {formatDate(
-                                                        ticket.createdAt
-                                                    )}
-                                                </td>
-
-                                                <td>
-                                                    <Link
-                                                        to={`/agent/tickets/${ticket._id}`}
-                                                        className="agent-ticket-view-btn"
-                                                    >
-                                                        View
-                                                    </Link>
-                                                </td>
-
-                                            </tr>
-                                        );
-                                    })}
-
-                                </tbody>
-
-                            </table>
-
-                        </div>
-                    )}
-
-                </div>
+                <Link
+                    to="/agent-dashboard"
+                    className="back-dashboard-btn"
+                >
+                    <i className="bi bi-arrow-left"></i>
+                    Dashboard
+                </Link>
 
             </div>
-        </Layout>
+
+
+            {/* ==============================
+                ERROR
+            ============================== */}
+
+            {error && (
+                <div className="agent-tickets-error">
+
+                    <i className="bi bi-exclamation-circle"></i>
+
+                    <span>
+                        {error}
+                    </span>
+
+                </div>
+            )}
+
+
+            {/* ==============================
+                FILTERS
+            ============================== */}
+
+            <div className="agent-filters">
+
+                {/* SEARCH */}
+
+                <div className="agent-search">
+
+                    <i className="bi bi-search"></i>
+
+                    <input
+                        type="text"
+                        placeholder="Search by ticket ID or title..."
+                        value={search}
+                        onChange={(e) =>
+                            setSearch(e.target.value)
+                        }
+                    />
+
+                </div>
+
+
+                {/* STATUS */}
+
+                <select
+                    value={statusFilter}
+                    onChange={(e) =>
+                        setStatusFilter(e.target.value)
+                    }
+                >
+
+                    <option>
+                        All Status
+                    </option>
+
+                    <option>
+                        Open
+                    </option>
+
+                    <option>
+                        Assigned
+                    </option>
+
+                    <option>
+                        In Progress
+                    </option>
+
+                    <option>
+                        Waiting for Employee
+                    </option>
+
+                    <option>
+                        Resolved
+                    </option>
+
+                    <option>
+                        Closed
+                    </option>
+
+                </select>
+
+
+                {/* PRIORITY */}
+
+                <select
+                    value={priorityFilter}
+                    onChange={(e) =>
+                        setPriorityFilter(e.target.value)
+                    }
+                >
+
+                    <option>
+                        All Priorities
+                    </option>
+
+                    <option>
+                        Critical
+                    </option>
+
+                    <option>
+                        High
+                    </option>
+
+                    <option>
+                        Medium
+                    </option>
+
+                    <option>
+                        Low
+                    </option>
+
+                </select>
+
+
+                {/* DEPARTMENT */}
+
+                <select
+                    value={departmentFilter}
+                    onChange={(e) =>
+                        setDepartmentFilter(e.target.value)
+                    }
+                >
+
+                    <option>
+                        All Departments
+                    </option>
+
+                    <option>
+                        IT Support
+                    </option>
+
+                    <option>
+                        Human Resources
+                    </option>
+
+                    <option>
+                        Finance
+                    </option>
+
+                    <option>
+                        Administration
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            {/* ==============================
+                TICKET COUNT
+            ============================== */}
+
+            <div className="agent-ticket-count">
+
+                Showing{" "}
+
+                <strong>
+                    {filteredTickets.length}
+                </strong>
+
+                {" "}of{" "}
+
+                <strong>
+                    {tickets.length}
+                </strong>
+
+                {" "}tickets
+
+            </div>
+
+
+            {/* ==============================
+                TICKETS CARD
+            ============================== */}
+
+            <div className="agent-all-tickets-card">
+
+                {filteredTickets.length === 0 ? (
+
+                    <div className="no-agent-results">
+
+                        <i className="bi bi-ticket-perforated"></i>
+
+                        <h3>
+                            No tickets found
+                        </h3>
+
+                        <p>
+                            Try changing your search or filters.
+                        </p>
+
+                    </div>
+
+                ) : (
+
+                    <div className="agent-all-table-wrapper">
+
+                        <table className="agent-all-tickets-table">
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>
+                                        Ticket
+                                    </th>
+
+                                    <th>
+                                        Title
+                                    </th>
+
+                                    <th>
+                                        Employee
+                                    </th>
+
+                                    <th>
+                                        Department
+                                    </th>
+
+                                    <th>
+                                        Priority
+                                    </th>
+
+                                    <th>
+                                        Status
+                                    </th>
+
+                                    <th>
+                                        Created
+                                    </th>
+
+                                    <th>
+                                        Action
+                                    </th>
+
+                                </tr>
+
+                            </thead>
+
+
+                            <tbody>
+
+                                {filteredTickets.map((ticket) => {
+
+                                    const department =
+                                        ticket.department ||
+                                        ticket.createdBy?.department ||
+                                        "-";
+
+                                    return (
+
+                                        <tr
+                                            key={ticket._id}
+                                        >
+
+                                            {/* TICKET ID */}
+
+                                            <td>
+
+                                                <strong>
+                                                    {getTicketId(
+                                                        ticket._id
+                                                    )}
+                                                </strong>
+
+                                            </td>
+
+
+                                            {/* TITLE */}
+
+                                            <td className="agent-ticket-title">
+
+                                                {ticket.title}
+
+                                            </td>
+
+
+                                            {/* EMPLOYEE */}
+
+                                            <td>
+
+                                                {ticket.createdBy?.name ||
+                                                    "-"}
+
+                                            </td>
+
+
+                                            {/* DEPARTMENT */}
+
+                                            <td>
+
+                                                {department}
+
+                                            </td>
+
+
+                                            {/* PRIORITY */}
+
+                                            <td>
+
+                                                <span
+                                                    className={`agent-ticket-badge ${getPriorityClass(
+                                                        ticket.priority
+                                                    )}`}
+                                                >
+                                                    {ticket.priority}
+                                                </span>
+
+                                            </td>
+
+
+                                            {/* STATUS */}
+
+                                            <td>
+
+                                                <span
+                                                    className={`agent-ticket-badge ${getStatusClass(
+                                                        ticket.status
+                                                    )}`}
+                                                >
+                                                    {ticket.status}
+                                                </span>
+
+                                            </td>
+
+
+                                            {/* CREATED */}
+
+                                            <td>
+
+                                                {formatDate(
+                                                    ticket.createdAt
+                                                )}
+
+                                            </td>
+
+
+                                            {/* VIEW */}
+
+                                            <td>
+
+                                                <Link
+                                                    to={`/agent/tickets/${ticket._id}`}
+                                                    className="agent-ticket-view-btn"
+                                                >
+                                                    View
+                                                </Link>
+
+                                            </td>
+
+                                        </tr>
+
+                                    );
+
+                                })}
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                )}
+
+            </div>
+
+        </div>
     );
 }
 

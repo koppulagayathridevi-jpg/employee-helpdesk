@@ -22,7 +22,7 @@ function Profile() {
         employeeId: "",
         role: "",
         joiningDate: "",
-        location: "Chennai, India"
+        location: "India"
     });
 
     // ==========================================
@@ -549,9 +549,7 @@ function Profile() {
 
                             <div>
 
-                                <span>
-                                    Employee ID
-                                </span>
+                                
 
                                 <strong>
                                     {profile.employeeId}
@@ -695,46 +693,7 @@ function Profile() {
                     </div>
 
 
-                    {/* PASSWORD */}
-
-                    <div className="security-item">
-
-                        <div className="security-item-left">
-
-                            <div className="security-icon">
-
-                                <i className="bi bi-key"></i>
-
-                            </div>
-
-                            <div>
-
-                                <strong>
-                                    Password
-                                </strong>
-
-                                <span>
-                                    Last changed recently
-                                </span>
-
-                            </div>
-
-                        </div>
-
-
-                        <button
-                            className="security-btn"
-                            type="button"
-                            disabled
-                        >
-
-                            Change Password
-
-                            <i className="bi bi-chevron-right"></i>
-
-                        </button>
-
-                    </div>
+             
 
 
                     {/* LOGOUT */}

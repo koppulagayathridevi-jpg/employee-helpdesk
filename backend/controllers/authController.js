@@ -1,9 +1,8 @@
+
+
 const User = require("../models/User");
 const bcrypt = require("bcryptjs");
-
 const jwt = require("jsonwebtoken");
-
-
 
 // ===============================
 // REGISTER USER
@@ -14,18 +13,22 @@ const registerUser = async (req, res) => {
             name,
             email,
             password,
-            employeeId,
             department,
             phone,
             role
         } = req.body;
+        console.log("========== REGISTER DEBUG ==========");
+console.log("Name:", name);
+console.log("Email:", email);
+console.log("Department:", department);
+console.log("Role:", role);
+console.log("====================================");
 
         // Check required fields
         if (
             !name ||
             !email ||
             !password ||
-            !employeeId ||
             !department
         ) {
             return res.status(400).json({
@@ -35,7 +38,7 @@ const registerUser = async (req, res) => {
 
         // Check if email already exists
         const existingEmail = await User.findOne({
-            email: email.toLowerCase()
+            email: email.toLowerCase().trim()
         });
 
         if (existingEmail) {
@@ -44,60 +47,64 @@ const registerUser = async (req, res) => {
             });
         }
 
-        // Check if employee ID already exists
-        const existingEmployee = await User.findOne({
-            employeeId
-        });
-
-        if (existingEmployee) {
-            return res.status(400).json({
-                message: "Employee ID already registered"
-            });
-        }
-
         // Hash password
         const hashedPassword = await bcrypt.hash(password, 10);
 
         // Create user
         const user = await User.create({
-            name,
-            email: email.toLowerCase(),
+            name: name.trim(),
+            email: email.toLowerCase().trim(),
             password: hashedPassword,
-            employeeId,
-            department,
+            department: department.trim(),
             phone: phone || "",
             role: role || "employee"
         });
 
         // Response
         res.status(201).json({
+            success: true,
             message: "Registration successful",
+
             user: {
                 id: user._id,
                 name: user.name,
                 email: user.email,
-                employeeId: user.employeeId,
                 department: user.department,
                 phone: user.phone,
-                role: user.role
+                role: user.role,
+                profileImage: user.profileImage,
+                isActive: user.isActive
             }
         });
 
     } catch (error) {
         console.error("Registration error:", error);
 
+        // Duplicate key error
+        if (error.code === 11000) {
+            return res.status(400).json({
+                success: false,
+                message: "Email already registered"
+            });
+        }
+
         res.status(500).json({
+            success: false,
             message: "Server error during registration"
         });
     }
 };
+
 
 // ===============================
 // LOGIN USER
 // ===============================
 const loginUser = async (req, res) => {
     try {
-        const { email, password } = req.body;
+        const {
+            email,
+            password
+        } = req.body;
 
         // Check required fields
         if (!email || !password) {
@@ -108,7 +115,7 @@ const loginUser = async (req, res) => {
 
         // Find user
         const user = await User.findOne({
-            email: email.toLowerCase()
+            email: email.toLowerCase().trim()
         });
 
         if (!user) {
@@ -136,11 +143,14 @@ const loginUser = async (req, res) => {
             });
         }
 
+        // Clean role
+        const userRole = user.role?.trim() || "employee";
+
         // Create JWT token
         const token = jwt.sign(
             {
                 id: user._id,
-                role: user.role,
+                role: userRole,
                 email: user.email
             },
             process.env.JWT_SECRET,
@@ -151,16 +161,20 @@ const loginUser = async (req, res) => {
 
         // Send response
         res.status(200).json({
+            success: true,
             message: "Login successful",
+
             token,
+
             user: {
                 id: user._id,
                 name: user.name,
                 email: user.email,
-                employeeId: user.employeeId,
                 department: user.department,
                 phone: user.phone,
-                role: user.role
+                role: userRole,
+                profileImage: user.profileImage,
+                isActive: user.isActive
             }
         });
 
@@ -168,11 +182,16 @@ const loginUser = async (req, res) => {
         console.error("Login error:", error);
 
         res.status(500).json({
+            success: false,
             message: "Server error during login"
         });
     }
 };
 
+
+// ===============================
+// EXPORT
+// ===============================
 module.exports = {
     registerUser,
     loginUser

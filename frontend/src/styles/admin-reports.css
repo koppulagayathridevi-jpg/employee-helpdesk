@@ -1,0 +1,1440 @@
+/* =========================================================
+   ADMIN REPORTS
+========================================================= */
+
+.admin-reports-page {
+    min-height: 100vh;
+    padding: 35px;
+    background:
+        linear-gradient(
+            135deg,
+            #f5f7ff 0%,
+            #f8fbff 45%,
+            #f7f8fc 100%
+        );
+
+    color: #172b4d;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.reports-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    gap: 25px;
+
+    margin-bottom: 30px;
+}
+
+.reports-title-section {
+    display: flex;
+    align-items: center;
+
+    gap: 16px;
+}
+
+.reports-title-icon {
+    width: 58px;
+    height: 58px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 17px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #4f46e5,
+            #7c3aed
+        );
+
+    color: white;
+
+    font-size: 27px;
+
+    box-shadow:
+        0 10px 25px rgba(79, 70, 229, 0.25);
+}
+
+.reports-header h2 {
+    margin: 0 0 6px;
+
+    font-size: 30px;
+    font-weight: 800;
+
+    color: #172b4d;
+    letter-spacing: -0.6px;
+}
+
+.reports-header p {
+    margin: 0;
+
+    color: #718096;
+
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   HEADER BUTTONS
+========================================================= */
+
+.reports-header-actions {
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+}
+
+.reports-back-btn,
+.reports-refresh-btn {
+    height: 44px;
+
+    padding: 0 18px;
+
+    border-radius: 11px;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: all 0.2s ease;
+}
+
+.reports-back-btn {
+    border: 1px solid #d8e0ec;
+
+    background: white;
+
+    color: #243b64;
+}
+
+.reports-back-btn:hover {
+    border-color: #4f46e5;
+
+    color: #4f46e5;
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 7px 18px rgba(79, 70, 229, 0.12);
+}
+
+.reports-refresh-btn {
+    border: none;
+
+    background:
+        linear-gradient(
+            135deg,
+            #243f78,
+            #3b5fa0
+        );
+
+    color: white;
+
+    box-shadow:
+        0 7px 18px rgba(36, 63, 120, 0.2);
+}
+
+.reports-refresh-btn:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 10px 23px rgba(36, 63, 120, 0.28);
+}
+
+.reports-refresh-btn:disabled {
+    opacity: 0.6;
+
+    cursor: not-allowed;
+
+    transform: none;
+}
+
+
+/* =========================================================
+   ERROR
+========================================================= */
+
+.reports-error {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 15px;
+
+    margin-bottom: 25px;
+
+    padding: 15px 18px;
+
+    border: 1px solid #fecaca;
+
+    border-radius: 13px;
+
+    background: #fff5f5;
+
+    color: #b91c1c;
+}
+
+.reports-error-message {
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    font-size: 14px;
+}
+
+.error-icon {
+    font-size: 18px;
+}
+
+.reports-error button {
+    padding: 7px 15px;
+
+    border: 1px solid #ef4444;
+
+    border-radius: 8px;
+
+    background: white;
+
+    color: #dc2626;
+
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+.reports-error button:hover {
+    background: #fee2e2;
+}
+
+
+/* =========================================================
+   SUMMARY CARDS
+========================================================= */
+
+.reports-summary {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+
+    gap: 18px;
+
+    margin-bottom: 25px;
+}
+
+.report-summary-card {
+    position: relative;
+
+    min-height: 110px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 15px;
+
+    padding: 21px;
+
+    border-radius: 17px;
+
+    background: white;
+
+    border: 1px solid rgba(226, 232, 240, 0.8);
+
+    box-shadow:
+        0 7px 25px rgba(30, 50, 80, 0.06);
+
+    overflow: hidden;
+
+    transition: all 0.25s ease;
+}
+
+.report-summary-card::after {
+    content: "";
+
+    position: absolute;
+
+    right: -25px;
+    top: -25px;
+
+    width: 90px;
+    height: 90px;
+
+    border-radius: 50%;
+
+    opacity: 0.08;
+}
+
+.report-summary-card:hover {
+    transform: translateY(-4px);
+
+    box-shadow:
+        0 13px 30px rgba(30, 50, 80, 0.1);
+}
+
+
+/* Blue */
+
+.summary-blue {
+    border-top: 4px solid #3b82f6;
+}
+
+.summary-blue::after {
+    background: #3b82f6;
+}
+
+
+/* Purple */
+
+.summary-purple {
+    border-top: 4px solid #8b5cf6;
+}
+
+.summary-purple::after {
+    background: #8b5cf6;
+}
+
+
+/* Orange */
+
+.summary-orange {
+    border-top: 4px solid #f59e0b;
+}
+
+.summary-orange::after {
+    background: #f59e0b;
+}
+
+
+/* Green */
+
+.summary-green {
+    border-top: 4px solid #22c55e;
+}
+
+.summary-green::after {
+    background: #22c55e;
+}
+
+
+/* Summary icon */
+
+.report-summary-icon {
+    width: 52px;
+    height: 52px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 14px;
+
+    font-size: 23px;
+}
+
+.summary-blue .report-summary-icon {
+    background: #eff6ff;
+}
+
+.summary-purple .report-summary-icon {
+    background: #f5f3ff;
+}
+
+.summary-orange .report-summary-icon {
+    background: #fff7ed;
+}
+
+.summary-green .report-summary-icon {
+    background: #f0fdf4;
+}
+
+.report-summary-content {
+    display: flex;
+    flex-direction: column;
+
+    gap: 3px;
+}
+
+.report-summary-content strong {
+    font-size: 28px;
+
+    font-weight: 800;
+
+    color: #172b4d;
+}
+
+.report-summary-content span {
+    font-size: 13px;
+
+    color: #718096;
+}
+
+
+/* =========================================================
+   CHART GRID
+========================================================= */
+
+.reports-chart-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 22px;
+
+    margin-bottom: 22px;
+}
+
+
+/* =========================================================
+   CHART CARD
+========================================================= */
+
+.report-chart-card {
+    padding: 24px;
+
+    border-radius: 18px;
+
+    background: white;
+
+    border: 1px solid #e8edf5;
+
+    box-shadow:
+        0 7px 25px rgba(30, 50, 80, 0.055);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.report-chart-card:hover {
+    box-shadow:
+        0 12px 32px rgba(30, 50, 80, 0.08);
+}
+
+
+/* =========================================================
+   CHART HEADER
+========================================================= */
+
+.chart-card-header {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: flex-start;
+
+    gap: 15px;
+
+    margin-bottom: 12px;
+}
+
+.chart-label {
+    display: inline-block;
+
+    font-size: 10px;
+
+    font-weight: 800;
+
+    letter-spacing: 1.2px;
+}
+
+
+/* Different label colors */
+
+.status-label {
+    color: #16a34a;
+}
+
+.priority-label {
+    color: #ea580c;
+}
+
+.department-label {
+    color: #2563eb;
+}
+
+.category-label {
+    color: #9333ea;
+}
+
+.agent-label {
+    color: #0891b2;
+}
+
+.performance-label {
+    color: #d97706;
+}
+
+
+.chart-card-header h4 {
+    margin: 5px 0;
+
+    font-size: 19px;
+
+    font-weight: 800;
+
+    color: #172b4d;
+}
+
+.chart-card-header p {
+    margin: 0;
+
+    font-size: 13px;
+
+    color: #718096;
+}
+
+
+/* =========================================================
+   CHART ICONS
+========================================================= */
+
+.chart-header-icon {
+    width: 44px;
+    height: 44px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border-radius: 13px;
+
+    font-size: 20px;
+}
+
+.status-icon {
+    background: #ecfdf5;
+}
+
+.priority-icon {
+    background: #fff7ed;
+}
+
+.department-icon {
+    background: #eff6ff;
+}
+
+.category-icon {
+    background: #faf5ff;
+}
+
+.agent-icon {
+    background: #ecfeff;
+}
+
+.performance-icon {
+    background: #fffbeb;
+}
+
+
+/* =========================================================
+   CHART CONTAINER
+========================================================= */
+
+.chart-container {
+    width: 100%;
+
+    min-height: 320px;
+
+    padding-top: 5px;
+}
+
+.chart-container svg {
+    outline: none;
+}
+
+.chart-container .recharts-text {
+    fill: #64748b;
+    font-size: 12px;
+}
+
+.chart-container .recharts-cartesian-axis-line {
+    stroke: #dce3ec;
+}
+
+.chart-container .recharts-cartesian-axis-tick-line {
+    stroke: #dce3ec;
+}
+
+.chart-container .recharts-cartesian-grid-horizontal line,
+.chart-container .recharts-cartesian-grid-vertical line {
+    stroke: #e5eaf1;
+}
+
+
+/* =========================================================
+   EMPTY CHART
+========================================================= */
+
+.empty-chart {
+    min-height: 280px;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 10px;
+
+    color: #94a3b8;
+
+    font-size: 32px;
+}
+
+.empty-chart span {
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   LOADING
+========================================================= */
+
+.reports-loading {
+    min-height: 420px;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 18px;
+
+    background: white;
+
+    box-shadow:
+        0 7px 25px rgba(30, 50, 80, 0.06);
+}
+
+.reports-spinner {
+    width: 48px;
+    height: 48px;
+
+    margin-bottom: 18px;
+
+    border: 4px solid #e5e7eb;
+
+    border-top-color: #4f46e5;
+
+    border-right-color: #8b5cf6;
+
+    border-radius: 50%;
+
+    animation:
+        reportsSpin 0.8s linear infinite;
+}
+
+@keyframes reportsSpin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.reports-loading h4 {
+    margin: 0 0 6px;
+
+    font-size: 19px;
+
+    font-weight: 750;
+
+    color: #172b4d;
+}
+
+.reports-loading p {
+    margin: 0;
+
+    color: #718096;
+
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   AGENT WORKLOAD
+========================================================= */
+
+.agent-workload-card {
+    margin-bottom: 22px;
+}
+
+
+/* =========================================================
+   AGENT PERFORMANCE
+========================================================= */
+
+.agent-performance-card {
+    margin-bottom: 22px;
+}
+
+.agent-performance-list {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 12px;
+}
+
+.agent-performance-row {
+    display: grid;
+
+    grid-template-columns:
+        minmax(250px, 1fr)
+        160px
+        100px;
+
+    align-items: center;
+
+    gap: 20px;
+
+    padding: 17px 18px;
+
+    border: 1px solid #e6ebf3;
+
+    border-radius: 14px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ffffff,
+            #f9fbff
+        );
+
+    transition: all 0.2s ease;
+}
+
+.agent-performance-row:hover {
+    transform: translateY(-2px);
+
+    border-color: #cfd9e8;
+
+    box-shadow:
+        0 7px 20px rgba(30, 50, 80, 0.08);
+}
+
+
+/* Agent */
+
+.agent-info {
+    display: flex;
+
+    align-items: center;
+
+    gap: 13px;
+
+    min-width: 0;
+}
+
+.agent-avatar {
+    width: 47px;
+    height: 47px;
+
+    min-width: 47px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background:
+        linear-gradient(
+            135deg,
+            #3b82f6,
+            #7c3aed
+        );
+
+    color: white;
+
+    font-size: 17px;
+
+    font-weight: 800;
+
+    box-shadow:
+        0 6px 15px rgba(59, 130, 246, 0.2);
+}
+
+.agent-details {
+    min-width: 0;
+}
+
+.agent-details h5 {
+    margin: 0 0 3px;
+
+    font-size: 14px;
+
+    font-weight: 750;
+
+    color: #172b4d;
+}
+
+.agent-details p {
+    margin: 0 0 2px;
+
+    font-size: 12px;
+
+    color: #718096;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+}
+
+.agent-details small {
+    font-size: 11px;
+
+    color: #94a3b8;
+}
+
+
+/* Agent tickets */
+
+.agent-ticket-count {
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+}
+
+.agent-ticket-count strong {
+    font-size: 24px;
+
+    font-weight: 800;
+
+    color: #2563eb;
+}
+
+.agent-ticket-count span {
+    margin-top: 2px;
+
+    font-size: 11px;
+
+    color: #718096;
+
+    text-align: center;
+}
+
+
+/* Performance */
+
+.agent-performance-result {
+    display: flex;
+
+    justify-content: flex-end;
+}
+
+.performance-badge {
+    min-width: 72px;
+
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 7px 12px;
+
+    border-radius: 20px;
+
+    font-size: 11px;
+
+    font-weight: 800;
+}
+
+
+/* High */
+
+.performance-high {
+    background: #dcfce7;
+
+    color: #15803d;
+
+    border: 1px solid #bbf7d0;
+}
+
+
+/* Good */
+
+.performance-good {
+    background: #fef3c7;
+
+    color: #a16207;
+
+    border: 1px solid #fde68a;
+}
+
+
+/* Low */
+
+.performance-low {
+    background: #fee2e2;
+
+    color: #dc2626;
+
+    border: 1px solid #fecaca;
+}
+
+
+/* Empty */
+
+.empty-performance {
+    min-height: 180px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+
+    color: #94a3b8;
+}
+
+.empty-performance span {
+    font-size: 34px;
+
+    margin-bottom: 10px;
+}
+
+.empty-performance p {
+    margin: 0;
+
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   REPORT INFORMATION
+========================================================= */
+
+.report-information {
+    padding: 24px;
+
+    border-radius: 18px;
+
+    background: white;
+
+    border: 1px solid #e8edf5;
+
+    box-shadow:
+        0 7px 25px rgba(30, 50, 80, 0.055);
+}
+
+.report-information-header {
+    display: flex;
+
+    align-items: center;
+
+    gap: 13px;
+
+    margin-bottom: 22px;
+}
+
+.information-icon {
+    width: 45px;
+    height: 45px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 13px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ecfdf5,
+            #eff6ff
+        );
+
+    font-size: 20px;
+}
+
+.report-information h4 {
+    margin: 0 0 4px;
+
+    font-size: 18px;
+
+    font-weight: 800;
+
+    color: #172b4d;
+}
+
+.report-information p {
+    margin: 0;
+
+    font-size: 13px;
+
+    color: #718096;
+}
+
+
+/* =========================================================
+   OVERVIEW
+========================================================= */
+
+.report-overview-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    gap: 15px;
+}
+
+.overview-item {
+    min-height: 100px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 16px;
+
+    border-radius: 13px;
+
+    border: 1px solid transparent;
+}
+
+.overview-item strong {
+    font-size: 27px;
+
+    font-weight: 800;
+}
+
+.overview-item span {
+    margin-top: 4px;
+
+    font-size: 12px;
+
+    text-align: center;
+}
+
+
+/* Blue */
+
+.overview-blue {
+    background: #eff6ff;
+
+    border-color: #dbeafe;
+}
+
+.overview-blue strong {
+    color: #2563eb;
+}
+
+.overview-blue span {
+    color: #3b82f6;
+}
+
+
+/* Purple */
+
+.overview-purple {
+    background: #faf5ff;
+
+    border-color: #ede9fe;
+}
+
+.overview-purple strong {
+    color: #7c3aed;
+}
+
+.overview-purple span {
+    color: #8b5cf6;
+}
+
+
+/* Green */
+
+.overview-green {
+    background: #f0fdf4;
+
+    border-color: #dcfce7;
+}
+
+.overview-green strong {
+    color: #16a34a;
+}
+
+.overview-green span {
+    color: #22c55e;
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 1100px) {
+
+    .admin-reports-page {
+        padding: 28px;
+    }
+
+    .reports-summary {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+    .reports-chart-grid {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 768px) {
+
+    .admin-reports-page {
+        padding: 20px 16px;
+    }
+
+    .reports-header {
+        flex-direction: column;
+
+        align-items: flex-start;
+    }
+
+    .reports-title-section {
+        align-items: flex-start;
+    }
+
+    .reports-header h2 {
+        font-size: 25px;
+    }
+
+    .reports-header-actions {
+        width: 100%;
+    }
+
+    .reports-back-btn,
+    .reports-refresh-btn {
+        flex: 1;
+    }
+
+    .reports-summary {
+        grid-template-columns: 1fr;
+    }
+
+    .report-chart-card {
+        padding: 19px;
+    }
+
+    .chart-container {
+        min-height: 280px;
+    }
+
+    .agent-performance-row {
+        grid-template-columns: 1fr;
+
+        gap: 15px;
+    }
+
+    .agent-ticket-count {
+        align-items: flex-start;
+
+        padding-left: 60px;
+    }
+
+    .agent-performance-result {
+        justify-content: flex-start;
+
+        padding-left: 60px;
+    }
+
+    .report-overview-grid {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 480px) {
+
+    .admin-reports-page {
+        padding: 15px 12px;
+    }
+
+    .reports-title-section {
+        gap: 10px;
+    }
+
+    .reports-title-icon {
+        width: 46px;
+        height: 46px;
+
+        font-size: 21px;
+    }
+
+    .reports-header h2 {
+        font-size: 22px;
+    }
+
+    .reports-header p {
+        font-size: 12px;
+    }
+
+    .reports-header-actions {
+        flex-direction: column;
+    }
+
+    .reports-back-btn,
+    .reports-refresh-btn {
+        width: 100%;
+
+        flex: none;
+    }
+
+    .report-summary-card {
+        min-height: 90px;
+
+        padding: 16px;
+    }
+
+    .report-summary-icon {
+        width: 44px;
+        height: 44px;
+    }
+
+    .report-summary-content strong {
+        font-size: 24px;
+    }
+
+    .report-chart-card {
+        padding: 15px;
+
+        border-radius: 14px;
+    }
+
+    .chart-card-header h4 {
+        font-size: 17px;
+    }
+
+    .chart-header-icon {
+        width: 38px;
+        height: 38px;
+
+        font-size: 17px;
+    }
+
+    .chart-container {
+        min-height: 250px;
+    }
+
+    .agent-performance-row {
+        padding: 14px;
+    }
+
+    .agent-avatar {
+        width: 41px;
+        height: 41px;
+
+        min-width: 41px;
+    }
+
+    .agent-ticket-count {
+        padding-left: 54px;
+    }
+
+    .agent-performance-result {
+        padding-left: 54px;
+    }
+
+    .report-information {
+        padding: 18px;
+    }
+
+
+
+
+}
+
+/* =========================================
+   AGENT PERFORMANCE
+========================================= */
+
+.agent-completion-info {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    margin-top: 7px;
+}
+
+.agent-completion-info span {
+    font-size: 11px;
+    color: #64748b;
+}
+
+
+/* PERFORMANCE SCORE */
+
+.performance-score {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 7px;
+}
+
+.performance-score strong {
+    font-size: 25px;
+    font-weight: 800;
+    color: #2563eb;
+}
+
+
+/* AGENT DEPARTMENT */
+
+.agent-details small + small {
+    display: block;
+    margin-top: 2px;
+}
+
+
+/* MOBILE */
+
+@media (max-width: 768px) {
+
+    .performance-score {
+        align-items: flex-start;
+    }
+
+}
+
+/* =========================================
+   RESPONSIVE DESIGN
+========================================= */
+
+@media (max-width: 768px) {
+
+    .reports-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+    }
+
+    .reports-header-actions {
+        width: 100%;
+        display: flex;
+        gap: 10px;
+    }
+
+    .reports-back-btn,
+    .reports-refresh-btn {
+        flex: 1;
+    }
+
+    .reports-summary {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .reports-chart-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .agent-performance-row {
+        grid-template-columns: 1fr;
+        gap: 18px;
+    }
+
+    .agent-performance-result {
+        justify-content: flex-start;
+    }
+
+    .performance-score {
+        align-items: flex-start;
+    }
+
+}
+
+
+@media (max-width: 480px) {
+
+    .reports-summary {
+        grid-template-columns: 1fr;
+    }
+
+    .reports-title-section h2 {
+        font-size: 22px;
+    }
+
+    .reports-title-section p {
+        font-size: 13px;
+    }
+
+    .reports-header-actions {
+        flex-direction: column;
+    }
+
+    .reports-back-btn,
+    .reports-refresh-btn {
+        width: 100%;
+    }
+
+    .report-chart-card {
+        padding: 16px;
+    }
+
+    .chart-card-header {
+        gap: 12px;
+    }
+
+    .chart-card-header h4 {
+        font-size: 17px;
+    }
+
+    .chart-card-header p {
+        font-size: 12px;
+    }
+
+    .agent-performance-row {
+        padding: 16px;
+    }
+
+    .agent-info {
+        align-items: flex-start;
+    }
+
+    .agent-avatar {
+        width: 42px;
+        height: 42px;
+        min-width: 42px;
+    }
+
+}

@@ -21,10 +21,13 @@ const authRoutes = require("./routes/authRoutes");
 const userRoutes = require("./routes/userRoutes");
 
 const ticketRoutes = require("./routes/ticketRoutes");
+const adminRoutes = require("./routes/adminRoutes");
 
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/tickets", ticketRoutes);
+
+app.use("/api/admin", adminRoutes);
 
 // Test route
 app.get("/", (req, res) => {
